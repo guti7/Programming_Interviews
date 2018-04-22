@@ -19,7 +19,7 @@ typedef struct Node {
 bool insertAtFront(Node **head, int data);
 Node *find(Node *head, int data);
 bool deleteNode(Node **head, Node *nodeToDelete);
-bool insertNode(Node **head, Node *nodeToInsert, int index);
+bool insertNode(Node **head, int elemToInsert, int index);
 void printList(Node *head);
 
 // Handle a singly linked list(SLL)
@@ -96,6 +96,16 @@ int main(void) {
   
   printf("\nPrint list:\n");
   printList(head);
+  
+  
+  printf("\nInsert data...\n: (%i, 2), (%i, 0), (%i, 5), (%i, 30)", 5, 9, 20, 30);
+  insertNode(&head, 5, 2);
+  insertNode(&head, 9, 0);
+  insertNode(&head, 20, 5);
+  insertNode(&head, 30, 30);
+  
+  printf("\nPrint list:\n");
+  printList(head);
 }
 
 // Insert element at the beggining of the LL
@@ -115,10 +125,12 @@ bool insertAtFront(Node **head, int data) {
 }
 
 // Find the item in the list, null if not found
+// Caller must detect error condition by checking for a null return
+// Alternatively, consider throwing an exception when an element is not found
 Node *find(Node *head, int data) {
   Node *current = head;
   
-  // Always test for the end of a list as you traverse it
+  // Always test for the end of a list(NULL) as you traverse it
   while(current && current->data != data){
     current = current->next;
   }
@@ -157,8 +169,47 @@ bool deleteNode(Node **head, Node *nodeToDelete) {
   return false;
 }
 
-bool insertNode(Node **head, Node *nodeToInsert) {
+bool insertNode(Node **head, int elemToInsert, int index) {
+  // check for null pointers
+  if (!head || !*head) {
+    return false;
+  }
+  // validate index
+  if (index < 0) {
+    return false;
+  }
+
+  // insert in middle, (insert at end is same as middle but with no next elem)
+  Node *newElem = malloc(sizeof(Node));
+  // Check if memory was successfully allocated
+  if (!newElem) {
+    return false;
+  }
   
+  Node *current = *head;
+  // Find position to insert
+  int i = 0;
+  while (i < index - 1 && current) {
+    current = current->next;
+    i += 1;
+  }
+  
+  if (i < index - 1) {
+    printf("\nIndex is out of bounds: %i\n", index);
+    return false; 
+  }
+  
+  newElem->data = elemToInsert;
+  
+  if (index == 0) {
+    newElem->next = current;
+    *head = newElem;
+  } else {
+    newElem->next = current->next;
+    current->next = newElem;
+  }
+  
+  return true;
 }
 
 void printList(Node *head) {

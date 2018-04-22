@@ -169,6 +169,8 @@ bool deleteNode(Node **head, Node *nodeToDelete) {
   return false;
 }
 
+// Insertion(Deletion) require a pointer to the element immemdiately preceding
+// the insertion(Delection) location
 bool insertNode(Node **head, int elemToInsert, int index) {
   // check for null pointers
   if (!head || !*head) {

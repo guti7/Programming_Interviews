@@ -108,6 +108,8 @@ int main(void) {
   printList(head);
   
   printf("\ndelete list...\n");
+  deleteList(&head);
+  printf("list: ");
   printList(head);
 }
 

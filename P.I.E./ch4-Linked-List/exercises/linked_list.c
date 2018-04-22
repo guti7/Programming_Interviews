@@ -20,6 +20,7 @@ bool insertAtFront(Node **head, int data);
 Node *find(Node *head, int data);
 bool deleteNode(Node **head, Node *nodeToDelete);
 bool insertNode(Node **head, int elemToInsert, int index);
+void deleteList(Node **head);
 void printList(Node *head);
 
 // Handle a singly linked list(SLL)
@@ -97,7 +98,6 @@ int main(void) {
   printf("\nPrint list:\n");
   printList(head);
   
-  
   printf("\nInsert data...\n: (%i, 2), (%i, 0), (%i, 5), (%i, 30)", 5, 9, 20, 30);
   insertNode(&head, 5, 2);
   insertNode(&head, 9, 0);
@@ -106,6 +106,24 @@ int main(void) {
   
   printf("\nPrint list:\n");
   printList(head);
+  
+  printf("\ndelete list...\n");
+  printList(head);
+}
+
+
+// Delete list, pay attention to freeing allocated memory.
+// No garbage collection in C
+void deleteList( Node **head) {
+  Node *current = *head;
+  
+  while(current) {
+    Node *next = current->next;
+    free(current);
+    current = next;
+  }
+  
+  *head = NULL;
 }
 
 // Insert element at the beggining of the LL

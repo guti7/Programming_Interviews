@@ -27,3 +27,13 @@ bool createStack(Element **stack) {
   *stack = NULL;
   return true;
 }
+
+bool deleteStack(Element **stack) {
+  Element *next;
+  while(*stack) {
+    next = *stack->next;
+    free(*stack);
+    *stack = next;
+  }
+  return true;
+}

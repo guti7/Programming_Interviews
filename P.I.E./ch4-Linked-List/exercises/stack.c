@@ -37,3 +37,13 @@ bool deleteStack(Element **stack) {
   }
   return true;
 }
+
+bool push(Element **stack, void *data) {
+  Element *top = malloc(sizeof(Element));
+  if (!top) return false; // check if allocation was successful
+  
+  top->data = data;
+  top->next = *stack;
+  *stack = top;
+  return true;
+}

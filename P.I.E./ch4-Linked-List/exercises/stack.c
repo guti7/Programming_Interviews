@@ -47,3 +47,18 @@ bool push(Element **stack, void *data) {
   *stack = top;
   return true;
 }
+
+bool pop(Element **stack, void **data) {
+  
+  // check for empty stack
+  if (!*stack) return false;
+  
+  Element *next = *stack;
+  *data = *stack->data;
+  *stack = *stack->next;
+  
+  free(next);
+  
+  return true;
+  
+}
